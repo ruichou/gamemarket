@@ -1,0 +1,30 @@
+async page => {
+ const checks=[];
+ const state=()=>page.evaluate(()=>JSON.parse(localStorage.getItem('zhouji-demo-v1')));
+ const check=(ok,label)=>{if(!ok)throw new Error(label);checks.push(label);};
+ const role=r=>page.locator(`[data-role="${r}"]`).click();
+ const nav=p=>page.locator(`[data-page="${p}"]`).click();
+ const action=(a,id)=>page.locator(`[data-action="${a}"]${id?`[data-id="${id}"]`:''}`).first().click();
+ const submit=()=>page.locator('dialog button[type="submit"]').click();
+ await page.evaluate(()=>localStorage.removeItem('zhouji-demo-v1'));await page.reload();
+ await role('player');await action('buy','p1');await page.locator('[name="gameId"]').fill('QA_Delta');await page.locator('[name="note"]').fill('测试教学服务');await page.locator('dialog input[type="checkbox"]').check();await submit();
+ let s=await state(),order=s.orders[0].id;check(s.orders[0].status==='unpaid','创建订单等待支付');
+ await action('pay',order);await submit();check((await state()).orders[0].status==='paid','玩家模拟付款');
+ await role('merchant');await nav('orders');await action('assign',order);check(!(await page.locator('dialog select').textContent()).includes('北辰'),'未缴保证金人员不进入派单候选');await page.locator('[data-close]').first().click();
+ await role('worker');await nav('wallet');await action('deposit');await page.locator('[name="agreed"]').check();await submit();check((await state()).workers[0].balance===50000,'北辰缴纳保证金');
+ await role('merchant');await nav('orders');await action('assign',order);await page.locator('[name="worker"]').selectOption('w1');await submit();
+ await role('worker');await action('accept',order);check((await state()).orders[0].status==='serving','打手接单开始服务');
+ await nav('wallet');await action('exit');await submit();await role('merchant');await nav('deposits');s=await state();const refund=s.refunds[0].id;check(await page.locator(`[data-action="approveRefund"][data-id="${refund}"]`).isDisabled(),'有未结订单时后台禁止退还');
+ await role('worker');await action('submit',order);await page.locator('[name="record"]').fill('已完成60分钟地图教学，讲解路线与撤离点。');await submit();
+ await role('player');await nav('orders');await action('complete',order);check((await state()).orders[0].status==='completed','玩家确认验收');
+ await role('merchant');await nav('deposits');await action('approveRefund',refund);s=await state();check(s.workers[0].balance===50000&&s.refunds[0].status==='processing','退款处理中不扣减余额');
+ await action('failRefund',refund);check((await state()).workers[0].balance===50000,'退款失败保留保证金');await action('approveRefund',refund);await action('finishRefund',refund);s=await state();check(s.workers[0].balance===0&&s.workers[0].exit==='exited','重试成功后保证金归零并退出');
+ await page.reload();s=await state();check(s.workers[0].exit==='exited','刷新保留业务状态');
+ await role('player');await nav('orders');await action('order','ZJ1002');await action('refundOrder','ZJ1002');await page.locator('[name="reason"]').fill('测试未完成服务退款');await submit();s=await state();const orderRefund=s.refunds[0].id;check(s.orders.find(o=>o.id==='ZJ1002').status==='disputed','售后申请形成纠纷');
+ await role('merchant');await nav('refunds');await action('approveRefund',orderRefund);await action('finishRefund',orderRefund);check((await state()).orders.find(o=>o.id==='ZJ1002').status==='refunded','订单退款流程完成');
+ await nav('products');await action('toggleProduct','p1');await role('player');check(await page.locator('[data-action="buy"][data-id="p1"]').count()===0,'下架同步玩家商城');
+ await page.setViewportSize({width:390,height:844});check(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth),'390px商城无横向溢出');await page.screenshot({path:'mobile-shop.png',fullPage:true});
+ await role('worker');await nav('wallet');check(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth),'390px保证金页无横向溢出');await page.screenshot({path:'mobile-wallet.png',fullPage:true});
+ await page.setViewportSize({width:1440,height:960});await page.evaluate(()=>localStorage.removeItem('zhouji-demo-v1'));await page.reload();await page.screenshot({path:'desktop.png',fullPage:true});
+ return {passed:checks.length,checks};
+}

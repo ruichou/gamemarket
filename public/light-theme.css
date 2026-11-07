@@ -1,0 +1,67 @@
+/* Shared bright theme for the player, worker and merchant views. */
+:root{color:#202b43;background:#f3f6fd;--lime:#5965e9;--muted:#66748c;--line:#e2e8f3;--panel:#fff;--red:#bc3e50}
+button{color:#435273;background:#edf1fc;border-color:#dde5f4}
+button:hover{background:#e1e8fc}
+button.primary,button.active{background:#5965e9;border-color:#5965e9;color:#fff}
+button.primary:hover,button.active:hover{background:#4954d3}
+button:disabled{opacity:.55}
+.topbar{background:#ffffffed}
+.brandmark{background:#5965e9;color:#fff}
+.brand small,.demo{color:#68768d}
+.roles{background:#f1f4fc;border-color:#e2e8f3}
+.roles button{color:#52617b}
+.roles button.active{background:#fff;color:#4c58d7;box-shadow:0 2px 8px #3949ab12}
+.sidebar{background:#fff}
+.sidebar .label{color:#75839b}
+.navitem,.navitem span:first-child{color:#64728c}
+.navitem.active{background:#edf0ff;color:#4c58d7;border-color:#e0e4ff}
+.navitem.active span:first-child{color:#5965e9}
+.navitem em{background:#dce2ff;color:#4350bc}
+.sidebottom{background:linear-gradient(135deg,#eef1ff,#f4f8ff);color:#64718d;border-color:#e0e6f6}
+.sidebottom b{color:#374568}
+.stat,.panel,.product,.workercard{box-shadow:0 5px 20px #314d8a05}
+.stat p{color:#67758c}
+.stat-icon{color:#5965d7;background:#eef0ff}
+.hero{background:radial-gradient(ellipse at 90% 15%,#dfdcff,transparent 60%),linear-gradient(115deg,#e2efff,#edf0ff 65%,#ece6ff);border-color:#dce4fa}
+.hero h2{color:#273a66}
+.hero p{color:#5a6d91}
+.eyebrow{color:#5664c6}
+.hero .watermark{color:#727ae51c}
+.radar{border-color:#8d9de54a;background:repeating-radial-gradient(circle,transparent 0 42px,#8d9de531 43px 44px),conic-gradient(from 40deg,transparent 30%,#8d9de51f 49%,transparent 50%)}
+.radar:before,.radar:after{background:#8d9de54a}
+.badge{background:#eaf0ff;border-color:#dbe3ff;color:#4554b6}
+.badge.neutral{background:#f0f4fb;border-color:#dce5f2;color:#5b6c87}
+.badge.warning{background:#fff5df;border-color:#f0dfb5;color:#876015}
+.badge.bad{background:#fff0f2;border-color:#f4d3d9;color:#ad3e53}
+th{background:#f7f9fd;color:#697890}
+td{border-top-color:#e8edf6}
+.code{color:#526b92}
+.avatar{background:#e8eeff;border-color:#d9e2fa;color:#5463be}
+.bar{background:linear-gradient(#8a92f9,#5965e9)}
+.productart{background:radial-gradient(ellipse at 75% 70%,#bdceff88,transparent 70%),#e8efff}
+.product:nth-child(2) .productart{background:radial-gradient(ellipse at 75% 70%,#bce7edaa,transparent 70%),#e8f6f9}
+.product:nth-child(3) .productart{background:radial-gradient(ellipse at 75% 70%,#dbc8ffaa,transparent 70%),#f2ecff}
+.productart:before{border-color:#9aa9e865;box-shadow:0 0 0 20px #8295de09,0 0 0 40px #8295de08}
+.productart .big{color:#7b8de63d}
+.productart .serial{color:#6c7dab}
+.price{color:#ef7556}
+.notice{background:#edf2ff;border-color:#dce5ff;color:#506389}
+.notice.warn{background:#fff7e8;border-color:#efdfbe;color:#876425}
+.timeline span{background:#eef2ff;border-color:#dfe5fc;color:#5667ad}
+.moneyhero{background:linear-gradient(115deg,#e0eaff,#e9e4ff);color:#344580;border:1px solid #d7dff7}
+.moneyhero small{color:#6775a0}
+.moneyhero button{background:#5965e9;color:#fff}
+.rulelist{color:#586a87}
+.textblock{background:#f3f6fc;color:#50627e}
+dialog{background:#fff;color:#25324c;border-color:#e0e6f2;box-shadow:0 30px 100px #27366130}
+dialog::backdrop{background:#25345155}
+dialog .subtitle{color:#697992}
+label.field{color:#536581}
+input,select,textarea{background:#f8faff;border-color:#dbe3f1;color:#283b59}
+input::placeholder,textarea::placeholder{color:#8391a6}
+input[type=checkbox]{accent-color:#5965e9}
+#toast{background:#e9edff;color:#3e50a6;border:1px solid #d3dcff;box-shadow:0 8px 24px #374b8b18}
+.bottomnote{color:#76869d}
+.flowsteps div{background:#fff;border-color:#e2e8f3;color:#61718c}
+.flowsteps b{color:#5965e9}
+@media(max-width:720px){.sidebar{background:#f8faff}.hero{background:radial-gradient(ellipse at 100% 0,#dfdcff,transparent 65%),linear-gradient(135deg,#e3efff,#f0edff)}}

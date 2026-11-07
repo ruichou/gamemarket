@@ -1,0 +1,1 @@
+{"name":"delta-service-v1","private":true,"type":"module","scripts":{"start":"node server.mjs","test":"node --test tests/domain.test.mjs"}}
